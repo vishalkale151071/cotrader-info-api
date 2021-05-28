@@ -15,7 +15,6 @@ interface ReturnShape {
     price: string;
     base_volume: string;
     quote_volume: string;
-    liquidity: string;
     liquidity_BNB: string;
   };
 }
@@ -28,7 +27,6 @@ export default async function (req: VercelRequest, res: VercelResponse): Promise
       const pId = getAddress(pair.id);
       const t0Id = getAddress(pair.token0.id);
       const t1Id = getAddress(pair.token1.id);
-
       accumulator[`${t0Id}_${t1Id}`] = {
         pair_address: pId,
         base_name: pair.token0.name,
@@ -38,9 +36,8 @@ export default async function (req: VercelRequest, res: VercelResponse): Promise
         quote_symbol: pair.token1.symbol,
         quote_address: t1Id,
         price: pair.price,
-        base_volume: pair.previous24hVolumeToken0,
-        quote_volume: pair.previous24hVolumeToken1,
-        liquidity: pair.reserveUSD,
+        base_volume: pair.volumeToken0,
+        quote_volume: pair.volumeToken1,
         liquidity_BNB: pair.reserveBNB,
       };
 
